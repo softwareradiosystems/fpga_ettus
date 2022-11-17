@@ -182,7 +182,13 @@ module b200 (
    wire [31:0] rx_data0, rx_data1;
    wire [31:0] tx_data0, tx_data1;
    wire mimo;
+   wire [31:0] my_wire0, my_wire1;
    
+   assign rx_data0[31:20] = tx_data0[31:20];
+   assign rx_data0[15:4]  = tx_data0[15:4];
+   assign rx_data1[31:20] = tx_data1[31:20];
+   assign rx_data1[15:4]  = tx_data1[15:4];
+	
    b200_io b200_io_i0
      (
       .reset(reset),
@@ -191,15 +197,15 @@ module b200 (
       // Baseband sample interface
       .radio_clk(radio_clk),
 
-      .rx_i0(rx_data0[31:20]), 
-      .rx_q0(rx_data0[15:4]), 
-      .rx_i1(rx_data1[31:20]), 
-      .rx_q1(rx_data1[15:4]),
+      .rx_i0(my_wire0[31:20]), 
+      .rx_q0(my_wire0[15:4]), 
+      .rx_i1(my_wire1[31:20]), 
+      .rx_q1(my_wire1[15:4]),
       
-      .tx_i0(tx_data0[31:20]), 
-      .tx_q0(tx_data0[15:4]), 
-      .tx_i1(tx_data1[31:20]), 
-      .tx_q1(tx_data1[15:4]),
+      .tx_i0(my_wire0[31:20]), 
+      .tx_q0(my_wire0[15:4]), 
+      .tx_i1(my_wire1[31:20]), 
+      .tx_q1(my_wire1[15:4]),
       
       // Catalina interface   
       .rx_clk(codec_data_clk_p), 
